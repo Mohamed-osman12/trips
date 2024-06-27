@@ -3,41 +3,92 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
     width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 aside {
-    width: 20%;
-    background-color: #f4f4f4;
-    padding: 1rem;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+aside h2 {
+    text-align: center;
+}
+
+#tripList {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+#tripList li {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+#tripList li:hover {
+    background-color: #f0f0f0;
 }
 
 main {
-    width: 80%;
-    padding: 2rem;
+    width: 100%;
 }
 
-h1, h2 {
-    color: #333;
+.hidden {
+    display: none;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
-form label, form input, form button {
-    margin: 0.5rem 0;
+form label {
+    margin-bottom: 5px;
+}
+
+form input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 2rem;
+    margin-bottom: 20px;
 }
 
 table, th, td {
@@ -45,10 +96,22 @@ table, th, td {
 }
 
 th, td {
-    padding: 0.5rem;
-    text-align: left;
+    padding: 10px;
+    text-align: center;
 }
 
-div {
-    margin-top: 2rem;
+@media (min-width: 600px) {
+    .container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    aside {
+        width: 30%;
+        margin-bottom: 0;
+    }
+
+    main {
+        width: 70%;
+    }
 }
