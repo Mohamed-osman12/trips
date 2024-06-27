@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب تكلفة السفريات</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <h2>السفريات</h2>
+            <ul id="tripList"></ul>
+        </aside>
+        <main>
+            <h1>إضافة سفريات</h1>
+            <form id="tripForm">
+                <label for="item">اسم العنصر:</label>
+                <input type="text" id="item" required>
+                <label for="minCost">الحد الأدنى للتكلفة:</label>
+                <input type="number" id="minCost" required>
+                <label for="maxCost">الحد الأقصى للتكلفة:</label>
+                <input type="number" id="maxCost" required>
+                <button type="submit">إضافة</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>اسم العنصر</th>
+                        <th>الحد الأدنى للتكلفة</th>
+                        <th>الحد الأقصى للتكلفة</th>
+                    </tr>
+                </thead>
+                <tbody id="tripTableBody"></tbody>
+            </table>
+            <div>
+                <p>مجموع الحد الأدنى: <span id="totalMinCost">0</span></p>
+                <p>مجموع الحد الأقصى: <span id="totalMaxCost">0</span></p>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
