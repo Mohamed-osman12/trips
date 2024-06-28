@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const analytics = firebase.analytics();
     const db = firebase.firestore();
 
+    // Get DOM elements
     const initialForm = document.getElementById('initialForm');
     const mainContainer = document.getElementById('mainContainer');
     const initialFormContainer = document.getElementById('initialFormContainer');
@@ -59,6 +60,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then(() => {
             updateTripList();
             selectTrip(tripName);
+        }).catch((error) => {
+            console.error("Error adding trip: ", error);
         });
     }
 
@@ -84,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const lastTrip = querySnapshot.docs[querySnapshot.size - 1].id;
                 selectTrip(lastTrip);
             }
+        }).catch((error) => {
+            console.error("Error getting trips: ", error);
         });
     }
 
@@ -93,6 +98,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 items: firebase.firestore.FieldValue.arrayUnion({ item, minCost, maxCost })
             }).then(() => {
                 loadTripItems();
+            }).catch((error) => {
+                console.error("Error adding trip item: ", error);
             });
         }
     }
@@ -127,6 +134,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     deleteTripItem(index);
                 });
             });
+        }).catch((error) => {
+            console.error("Error loading trip items: ", error);
         });
     }
 
@@ -140,7 +149,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 items: items
             }).then(() => {
                 loadTripItems();
+            }).catch((error) => {
+                console.error("Error deleting trip item: ", error);
             });
+        }).catch((error) => {
+            console.error("Error getting trip for deletion: ", error);
         });
     }
 
