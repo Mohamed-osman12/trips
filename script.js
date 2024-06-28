@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     
     
-    const db = firebase.firestore();
+    const db = firestore();
     
 
     // Get DOM elements
