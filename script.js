@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
+
+    import firebase from 'firebase/compat/app';
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = firebase.firestore();
 
     // Get DOM elements
     const initialForm = document.getElementById('initialForm');
