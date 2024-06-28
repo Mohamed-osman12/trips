@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    const db = firebase.firestore();
+    
+    import { getFirestore, collection, addDoc } from "firebase/firestore";
+    
+    const db = getFirestore(app);
+    
 
     // Get DOM elements
     const initialForm = document.getElementById('initialForm');
