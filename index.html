@@ -1,59 +1,62 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حساب تكلفة السفريات</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Travel Cost Calculator</title>
+    <style>
+        /* Include your CSS here */
+    </style>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
+    <!-- Your custom script -->
+    <script defer src="script.js"></script>
 </head>
 <body>
+    <!-- Your HTML content here -->
     <div id="initialFormContainer">
-        <h1>إضافة اسم السفرية</h1>
         <form id="initialForm">
             <label for="tripName">اسم السفرية:</label>
             <input type="text" id="tripName" required>
-            <button type="submit">إضافة</button>
+            <button type="submit">إضافة سفرية</button>
         </form>
     </div>
     <div id="mainContainer" class="hidden">
-        <div class="container">
-            <aside>
-                <h2>السفريات</h2>
-                <button id="newTripButton">إضافة سفرية جديدة</button>
-                <ul id="tripList"></ul>
-            </aside>
-            <main>
-                <h1 id="selectedTripTitle"></h1>
-                <form id="tripForm">
-                    <label for="item">اسم العنصر:</label>
-                    <input type="text" id="item" required>
-                    <label for="minCost">الحد الأدنى للتكلفة:</label>
-                    <input type="number" id="minCost" required>
-                    <label for="maxCost">الحد الأقصى للتكلفة:</label>
-                    <input type="number" id="maxCost" required>
-                    <button type="submit">إضافة</button>
-                </form>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>اسم العنصر</th>
-                            <th>الحد الأدنى للتكلفة</th>
-                            <th>الحد الأقصى للتكلفة</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tripTableBody"></tbody>
-                </table>
-                <div>
-                    <p>مجموع الحد الأدنى: <span id="totalMinCost">0</span></p>
-                    <p>مجموع الحد الأقصى: <span id="totalMaxCost">0</span></p>
-                </div>
-            </main>
-        </div>
+        <aside>
+            <h2>السفريات</h2>
+            <ul id="tripList"></ul>
+            <button id="newTripButton">إضافة سفرية جديدة</button>
+        </aside>
+        <main>
+            <h2 id="selectedTripTitle"></h2>
+            <form id="tripForm">
+                <label for="item">العنصر:</label>
+                <input type="text" id="item" required>
+                <label for="minCost">التكلفة الأدنى:</label>
+                <input type="number" id="minCost" required>
+                <label for="maxCost">التكلفة الأعلى:</label>
+                <input type="number" id="maxCost" required>
+                <button type="submit">إضافة عنصر</button>
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>العنصر</th>
+                        <th>التكلفة الأدنى</th>
+                        <th>التكلفة الأعلى</th>
+                        <th>حذف</th>
+                    </tr>
+                </thead>
+                <tbody id="tripTableBody"></tbody>
+            </table>
+            <div>
+                <p>الإجمالي الأدنى: <span id="totalMinCost">0</span></p>
+                <p>الإجمالي الأعلى: <span id="totalMaxCost">0</span></p>
+            </div>
+        </main>
     </div>
-    <!-- Firebase App (الـ Core) -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-    <!-- Firebase Firestore -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
