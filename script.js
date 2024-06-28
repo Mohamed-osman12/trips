@@ -1,18 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyBiNZmf6rBGK0u61jdJRjPYqSTTV9LHVHs",
-      authDomain: "trips-b722c.firebaseapp.com",
-      projectId: "trips-b722c",
-      storageBucket: "trips-b722c.appspot.com",
-      messagingSenderId: "73446183139",
-      appId: "1:73446183139:web:81eea9689917ed15ca75d6",
-      measurementId: "G-VWMC813WK0"
-    };
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
     const db = firebase.firestore();
 
     // Get DOM elements
