@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     // Initialize Firebase
-    const analytics = firebase.analytics();
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
     const db = firebase.firestore();
 
     // Get DOM elements
