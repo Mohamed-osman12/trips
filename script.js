@@ -1,23 +1,20 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyBiNZmf6rBGK0u61jdJRjPYqSTTV9LHVHs",
-    authDomain: "trips-b722c.firebaseapp.com",
-    projectId: "trips-b722c",
-    storageBucket: "trips-b722c.appspot.com",
-    messagingSenderId: "73446183139",
-    appId: "1:73446183139:web:81eea9689917ed15ca75d6",
-    measurementId: "G-VWMC813WK0"
-  };
-
-  // Initialize Firebase
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
-
-const db = getFirestore(app);
-
 document.addEventListener('DOMContentLoaded', function () {
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBiNZmf6rBGK0u61jdJRjPYqSTTV9LHVHs",
+        authDomain: "trips-b722c.firebaseapp.com",
+        projectId: "trips-b722c",
+        storageBucket: "trips-b722c.appspot.com",
+        messagingSenderId: "73446183139",
+        appId: "1:73446183139:web:81eea9689917ed15ca75d6",
+        measurementId: "G-VWMC813WK0"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics();
+    const db = firebase.firestore();
+
     const initialForm = document.getElementById('initialForm');
     const mainContainer = document.getElementById('mainContainer');
     const initialFormContainer = document.getElementById('initialFormContainer');
