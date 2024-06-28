@@ -1,3 +1,22 @@
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBiNZmf6rBGK0u61jdJRjPYqSTTV9LHVHs",
+    authDomain: "trips-b722c.firebaseapp.com",
+    projectId: "trips-b722c",
+    storageBucket: "trips-b722c.appspot.com",
+    messagingSenderId: "73446183139",
+    appId: "1:73446183139:web:81eea9689917ed15ca75d6",
+    measurementId: "G-VWMC813WK0"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
+const db = getFirestore(app);
+
 document.addEventListener('DOMContentLoaded', function () {
     const initialForm = document.getElementById('initialForm');
     const mainContainer = document.getElementById('mainContainer');
@@ -10,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const selectedTripTitle = document.getElementById('selectedTripTitle');
     const newTripButton = document.getElementById('newTripButton');
 
-    let trips = JSON.parse(localStorage.getItem('trips')) || {};
     let selectedTrip = null;
 
     initialForm.addEventListener('submit', function (e) {
@@ -39,11 +57,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function addTrip(tripName) {
-        if (!trips[tripName]) {
-            trips[tripName] = [];
+        db.collection('trips').doc(tripName).set({
+            items: []
+        }).then(() => {
             updateTripList();
-            saveTrips();
-        }
+            selectTrip(tripName);
+        });
     }
 
     function selectTrip(tripName) {
@@ -54,46 +73,78 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function updateTripList() {
         tripList.innerHTML = '';
-        for (let tripName in trips) {
-            const li = document.createElement('li');
-            li.textContent = tripName;
-            li.addEventListener('click', () => selectTrip(tripName));
-            tripList.appendChild(li);
-        }
+        db.collection('trips').get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                const tripName = doc.id;
+                const li = document.createElement('li');
+                li.textContent = tripName;
+                li.addEventListener('click', () => selectTrip(tripName));
+                tripList.appendChild(li);
+            });
+
+            if (!selectedTrip && querySnapshot.size > 0) {
+                // Select the last trip added if no trip is currently selected
+                const lastTrip = querySnapshot.docs[querySnapshot.size - 1].id;
+                selectTrip(lastTrip);
+            }
+        });
     }
 
     function addTripItem(item, minCost, maxCost) {
         if (selectedTrip) {
-            trips[selectedTrip].push({ item, minCost, maxCost });
-            loadTripItems();
-            saveTrips();
+            db.collection('trips').doc(selectedTrip).update({
+                items: firebase.firestore.FieldValue.arrayUnion({ item, minCost, maxCost })
+            }).then(() => {
+                loadTripItems();
+            });
         }
     }
 
     function loadTripItems() {
         tripTableBody.innerHTML = '';
-        let totalMin = 0;
-        let totalMax = 0;
+        db.collection('trips').doc(selectedTrip).get().then(doc => {
+            const data = doc.data();
+            let totalMin = 0;
+            let totalMax = 0;
 
-        trips[selectedTrip].forEach(({ item, minCost, maxCost }) => {
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${item}</td>
-                <td>${minCost}</td>
-                <td>${maxCost}</td>
-            `;
-            tripTableBody.appendChild(newRow);
+            data.items.forEach(({ item, minCost, maxCost }, index) => {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${item}</td>
+                    <td>${minCost}</td>
+                    <td>${maxCost}</td>
+                    <td><button class="delete-button" data-index="${index}">حذف</button></td>
+                `;
+                tripTableBody.appendChild(newRow);
 
-            totalMin += minCost;
-            totalMax += maxCost;
+                totalMin += minCost;
+                totalMax += maxCost;
+            });
+
+            totalMinCost.textContent = totalMin;
+            totalMaxCost.textContent = totalMax;
+
+            document.querySelectorAll('.delete-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    deleteTripItem(index);
+                });
+            });
         });
-
-        totalMinCost.textContent = totalMin;
-        totalMaxCost.textContent = totalMax;
     }
 
-    function saveTrips() {
-        localStorage.setItem('trips', JSON.stringify(trips));
+    function deleteTripItem(index) {
+        db.collection('trips').doc(selectedTrip).get().then(doc => {
+            const data = doc.data();
+            const items = data.items;
+            items.splice(index, 1);
+
+            db.collection('trips').doc(selectedTrip).update({
+                items: items
+            }).then(() => {
+                loadTripItems();
+            });
+        });
     }
 
     updateTripList();
